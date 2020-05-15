@@ -1,42 +1,59 @@
-
+// from data.js
 var tableData = data;
 
+// YOUR CODE HERE!
 
 var tbody = d3.select("tbody");
 
 console.log(data);
 
+// Loop through the data append table rows
 data.forEach(function(reportSightings) {
   console.log(reportSightings);
   var row = tbody.append("tr");
 
+  // console.log sightings data
   Object.entries(reportSightings).forEach(function([key, value]){
     console.log(key, value);
 
+    // append cell values
     var cell = row.append("td");
     cell.text(value);
-        });
-});
+        
 
-var button = d3.select("#filter-btn");
 
-var form = d3.select("#form");
 
-button.on("click",runEnter);
-form.on("submit",runEnter);
+    // Get the value property of the input element
+    var button = d3.select("#filter-btn");
 
-function runEnter(){
-  d3.event.preventDefault();
+    //  Select the form
+    var form = d3.select(".filter list-group-item");
 
-  var inputElement = d3.select("date");
+    // Create event handlers 
+    button.on("click", runEnter);
+    form.on("submit",runEnter);
 
-  var inputValue = inputElement.property("value");
-  
-  console.log(inputValue);
-  console.log(tableData);
+    // Complete the event handler function for the form
+    function runEnter() {
 
-  var filteredData = tableData.filter(tableData=> tableData.datetime===inputValue);
-  
-  console.log(filteredData);
+      // Prevent the page from refreshing
+     d3.event.preventDefault();
+          
+      // Select the input element and get the raw HTML node
+      var inputElement = d3.select("#datetime");
 
-};
+      // Get the value property of the input element
+      var inputValue = inputElement.property("value");
+
+      console.log(inputValue);
+      console.log(tableData);
+
+      var filteredData = tableData.filter(sightings => sightings.datetime === inputValue);
+
+      console.log(filteredData);
+
+    
+
+    };
+  });     
+});      
